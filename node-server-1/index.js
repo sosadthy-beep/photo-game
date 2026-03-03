@@ -1,33 +1,36 @@
-
 require('dotenv').config();
 
-const mongoose = require("mongoose")
-
+const mongoose = require("mongoose");
 const express = require("express");
 const multer = require('multer');
 const axios = require('axios');
 const fs = require('fs');
 const FormData = require('form-data');
-const cors = require("cors")
-const User = require("./models/User.models")
-const Event = require("./models/Event.models")
-const Photo = require("./models/Photo.models")
-const Studio = require("./models/Studio.models")
+const cors = require("cors");
+const User = require("./models/User.models");
+const Event = require("./models/Event.models");
+const Photo = require("./models/Photo.models");
+const Studio = require("./models/Studio.models");
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const crypto = require('crypto');
-require("./Config_db")
+require("./Config_db");
 
-
-
-
-
+// 先建立 app
 const app = express();
 
-app.use(express.json());
-app.use(cors())
+// CORS 設定放在所有 middleware 之前，且只用一次
+app.use(cors({
+  origin: 'http://localhost:3000',              // 只允許 React 來源
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,                            // 如果有 cookie 或 token
+  optionsSuccessStatus: 204                     // 預檢回 204 OK
+}));
 
+// 其他 middleware
+app.use(express.json());
 //----------------------------------------------------------------------------
 function generateOTP() {
     return crypto.randomInt(100000, 999999).toString(); // 6-digit OTP
@@ -37,12 +40,17 @@ let otpStorage = {}; // In-memory store to map email -> OTP
 
 //-----------------------------------------------------------------------------
 
+console.log('讀取 .env：');
+console.log('EMAIL_USER:', process.env.EMAIL_USER || '未讀取！');
+console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? '已讀取（隱藏）' : '未讀取！');
+console.log('JWT_SECRET:', process.env.JWT_SECRET ? '已讀取' : '未讀取！');
+
 const JWT_SECRET = process.env.JWT_SECRET;
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
         user: process.env.EMAIL_USER,
-        pass: 'okdd qvrb zemg jjxs', // Use your Gmail app password here
+        pass: process.env.EMAIL_PASS,   // ← 從 .env 讀取
     },
 });
 
@@ -105,7 +113,7 @@ app.post("/register", async (req, resp) => {
         const result = await user.save();
 
         // Generate a JWT token for verification
-        const token = jwt.sign({ userId: result._id }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: result._id }, JWT_SECRET, { expiresIn: '24h' });
 
         // Send verification email
         const verificationLink = `http://localhost:5000/verify/${token}`;
@@ -692,8 +700,7 @@ app.put("/events/:id", async (req, res) => {
 
 
 
-app.listen(5000)
-console.log("server is running on port 5000")
-// app.listen(5000, () => {
-//     console.log("Server is running on port 5000");
-// });
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`server is running on port ${PORT}`);
+});

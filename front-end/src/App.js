@@ -1,4 +1,3 @@
-
 import './App.css';
 import './component/Style-css/Footer-Header.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,8 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import PrivateRoute from './component/PrivateRoute';
 
-
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Header from './component/navbar/Header';
 import Footer from './component/Footer';
 
@@ -23,36 +21,32 @@ import ConfirmVerify from './component/login/ConfirmVerify';
 import ForgetPass from './component/login/ForgetPass';
 
 function App() {
-
-
   return (
     <div className="App">
 
-
-
       <BrowserRouter>
-
-
-
-
-
-
 
         <Routes>
 
-          <Route path='/' element={< Home />} />
-          <Route path='/forgetpassword' element={<ForgetPass/>}/>
-          <Route path='/confirmed' element={<ConfirmVerify/>}/>
+          <Route path='/' element={<Home />} />
+          <Route path='/forgetpassword' element={<ForgetPass />} />
+          
+          {/* 驗證相關路由：兩個都指向 ConfirmVerify */}
+          <Route path="/verify/:token" element={<ConfirmVerify />} />          {/* ← 新增：處理驗證連結 */}
+          <Route path='/confirmed' element={<ConfirmVerify />} />              {/* ← 原有：處理 redirect 後頁面 */}
+
           <Route path="/emailverified" element={<EmailVerified />} />
-          <Route path='/camera' element={<CameraCaptureWithMask/>}/>
+          <Route path='/camera' element={<CameraCaptureWithMask />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/in-event' element={<InEvent />} />
           <Route path='/collect/:eventId' element={<Collect_event />} />
           <Route path='/login' element={<Login_Register />} />
           <Route path='/about' element={<About />} />
 
-        </Routes>
+          {/* 如果有其他路由，可繼續加 */}
+          {/* <Route path="*" element={<Navigate to="/" replace />} /> */} {/* 404 跳主頁，可選 */}
 
+        </Routes>
 
       </BrowserRouter>
 

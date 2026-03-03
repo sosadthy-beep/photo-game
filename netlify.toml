@@ -1,0 +1,34 @@
+# 基本設定
+[build]
+  # 前端靜態檔案建置
+  command = "cd frontend && npm install && npm run build"
+  publish = "frontend/build"
+
+  # 環境變數（所有 Functions 共用）
+  environment = { NODE_VERSION = "18" }
+
+# 前端路由全部交給 React Router（SPA）
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Node.js 後端 - 部署為 Netlify Function
+[functions]
+  directory = "node-backend"   # 你的 Node 後端資料夾
+  node_bundler = "esbuild"
+  included_files = ["node-backend/**"]
+
+# Flask 後端 - 包裝成另一個 Function（需轉成 serverless 風格）
+# 因為 Netlify Functions 支援 Python，但要包裝成單檔案或用 serverless-http
+[functions]
+  directory = "flask-backend"
+  node_bundler = "esbuild"   # 如果用 serverless-http 包裝 Flask
+  included_files = ["flask-backend/**"]
+
+# 可選：設定不同分支的環境變數
+[context.production.environment]
+  NODE_ENV = "production"
+
+[context.deploy-preview.environment]
+  NODE_ENV = "development"
