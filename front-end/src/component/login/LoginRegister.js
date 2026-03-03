@@ -5,7 +5,7 @@ import Footer from "../Footer";
 import Header from "../navbar/Header";
 import { Input, message } from "antd";
 
-const Login_Register = () => {
+const LoginRegister = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,7 +40,6 @@ const Login_Register = () => {
         result = await result.json();
         message.success("註冊成功！已自動登入");
 
-        // 儲存用戶資訊到 localStorage，模擬登入
         localStorage.setItem("user", JSON.stringify({
           name: result.user?.name || name,
           email: result.user?.email || email,
@@ -48,8 +47,7 @@ const Login_Register = () => {
           isVerified: true
         }));
 
-        // 直接跳轉到 dashboard 或主頁
-        navigate('/dashboard');  // 你可改成 '/' 如果主頁是 '/'
+        navigate('/dashboard');
 
       } else {
         result = await result.json();
@@ -82,7 +80,6 @@ const Login_Register = () => {
         result = await result.json();
         message.success("登入成功！");
 
-        // 儲存用戶資訊
         localStorage.setItem("user", JSON.stringify({
           name: result.name,
           email: email,
@@ -90,7 +87,6 @@ const Login_Register = () => {
           isVerified: true
         }));
 
-        // 直接跳轉
         navigate('/dashboard');
 
       } else {
@@ -186,4 +182,4 @@ const Login_Register = () => {
   );
 };
 
-export default Login_Register;
+export default LoginRegister;

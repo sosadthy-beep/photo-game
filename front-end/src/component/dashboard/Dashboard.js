@@ -5,7 +5,7 @@ import { Link, useNavigate, } from "react-router-dom";
 import { Input, message, Switch, Upload } from 'antd'
 import ImgCrop from 'antd-img-crop';
 import Qrcode from './Qrcode'
-import Display_event from "./Display_event";
+import DisplayEvent from "./DisplayEvent";
 import InEvent from "./InEvent";
 import Photographer_detail from "./Photographer_detail";
 import { Color } from "antd/es/color-picker";
@@ -300,7 +300,7 @@ const Dashboard = () => {
                         <div id="event" className=" justify-content-center active">
                             {/* <div><h1>Your Event's</h1></div> */}
 
-                            <Display_event refresh={refresh} onclick={inevents} eventdata={eventdata} />
+                            <DisplayEvent refresh={refresh} onclick={inevents} eventdata={eventdata} />
 
                         </div>
 

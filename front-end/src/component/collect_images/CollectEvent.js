@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 
 
-const Collect_event = () => {
+const CollectEvent = () => {
     const { eventId } = useParams();
     const [resp, setresp] = useState('')
     const [pin, setpin] = useState('')
@@ -112,9 +112,10 @@ const Collect_event = () => {
 
 
 
+
         </div>
     )
 }
 
 
-export default Collect_event;
+export default CollectEvent;

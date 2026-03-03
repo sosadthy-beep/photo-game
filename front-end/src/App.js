@@ -9,10 +9,10 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Header from './component/navbar/Header';
 import Footer from './component/Footer';
 
-import Collect_event from './component/collect_images/Collect_event';
+import CollectEvent from './component/collect_images/CollectEvent';
 import Home from './component/home/Home';
 import About from './component/About';
-import Login_Register from './component/login/Login_Register';
+import LoginRegister from './component/login/LoginRegister';
 import Dashboard from './component/dashboard/Dashboard'
 import InEvent from './component/dashboard/InEvent';
 import CameraCaptureWithMask from './component/collect_images/CameraCaptureWithMask';
@@ -39,8 +39,8 @@ function App() {
           <Route path='/camera' element={<CameraCaptureWithMask />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/in-event' element={<InEvent />} />
-          <Route path='/collect/:eventId' element={<Collect_event />} />
-          <Route path='/login' element={<Login_Register />} />
+          <Route path='/collect/:eventId' element={<CollectEvent />} />
+          <Route path='/login' element={<LoginRegister />} />
           <Route path='/about' element={<About />} />
 
           {/* 如果有其他路由，可繼續加 */}

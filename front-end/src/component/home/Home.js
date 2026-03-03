@@ -2,7 +2,7 @@ import { React, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import { Card } from 'antd'
 import { EyeInvisibleOutlined, SafetyCertificateOutlined } from '@ant-design/icons'
-import Get_Start_Button from './Get_Started_Button'
+import GetStartButton from './GetStartButton'
 import Sider from './Slider'
 import Goal from './Goal'
 import Header from '../navbar/Header'
@@ -26,8 +26,8 @@ const Home = () => {
       <Sider />
 
       <Goal />
-      <div className='row start-row bg1'>
-        <Get_Start_Button />
+        <div className='row start-row bg1'>
+        <GetStartButton />
       </div>
       <div className='row home-video2'>
         <div className='col-12 col-lg-5 col-sm-3 home-video2-h'>
@@ -48,7 +48,7 @@ const Home = () => {
 
       <Container className='bg '>
         <div className='row start-row'>
-          <Get_Start_Button />
+          <GetStartButton />
         </div>
       </Container>
 
